@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTarefaDto } from './dto/create-tarefa.dto';
 import { UpdateTarefaDto } from './dto/update-tarefa.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { Tarefa } from '@prisma/client';
 
 @Injectable()
 export class TarefasService {
-  create(createTarefaDto: CreateTarefaDto) {
-    return 'This action adds a new tarefa';
+  constructor( private prismaService: PrismaService) {}
+
+  async create(data: CreateTarefaDto): Promise<Tarefa> {
+    return this.prismaService.tarefa.create({data})
+  };
+
+  async findAll(): Promise<Tarefa[]> {
+    return this.prismaService.tarefa.findMany();
   }
 
-  findAll() {
-    return `This action returns all tarefas`;
+  async findOne(id: string): Promise<Tarefa | null> {
+    const tarefa = await this.prismaService.tarefa.findUnique({
+      where: { id },
+    });
+    if (!tarefa) {
+      throw new Error(`Tarefa com ID ${id} não encontrado`);
+    }
+    return tarefa;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tarefa`;
+  async update(id: string, data: UpdateTarefaDto) {
+    const tarefaId = await this.prismaService.tarefa.findUnique({
+      where: { id },
+    })  
+    if (!tarefaId) {
+      throw new Error(`Tarefa com ID ${id} não encontrado`);
+    }
+    return this.prismaService.tarefa.update({
+      where: { id },
+      data,
+    });
   }
 
-  update(id: number, updateTarefaDto: UpdateTarefaDto) {
-    return `This action updates a #${id} tarefa`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} tarefa`;
+  async remove(id: string): Promise<Tarefa> {
+    try {
+      return this.prismaService.tarefa.delete({
+        where: { id },
+      });   
+    } catch {
+      throw new Error(`Tarefa com ID ${id} não encontrado`);
+    }
   }
 }

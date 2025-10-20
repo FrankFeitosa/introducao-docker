@@ -1,0 +1,12 @@
+services:
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    env_file: .env
+    environment:
+     POSTGRES_USER: backend
+     POSTGRES_PASSWORD: Senh4fort3
+     POSTGRES_DB: dockerdb
+    ports:
+      - "5433:5432"
