@@ -1,0 +1,17 @@
+# Etapa 01 - Definir a imagem base do NodeJs
+FROM node:20-alpine
+
+# Etapa 02 - Definir o diretório de trabalho do container
+WORKDIR /api
+
+# Etapa 03 - Copiar arquivos de dependência e instalar
+COPY package*.json /.
+RUN npm install
+
+# Etapa 04 - Copiar o restante dos arquivos e compilar 
+COPY . .
+RUN npx prisma generate
+RUN npm run build
+
+# Etapa 05 - Expor a porta da aplicação
+EXPOSE 3000
