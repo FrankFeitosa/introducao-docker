@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Type, Transform} from 'class-transformer';
+import { Transform} from 'class-transformer';
 
 export class CreateTarefaDto {
     @ApiProperty({ example: 'Ensaio', description: 'Nome da tarefa' })

@@ -41,7 +41,7 @@ export class TarefasService {
 
   async remove(id: string): Promise<Tarefa> {
     try {
-      return this.prismaService.tarefa.delete({
+      return await this.prismaService.tarefa.delete({
         where: { id },
       });   
     } catch {

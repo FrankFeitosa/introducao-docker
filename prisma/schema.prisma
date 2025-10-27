@@ -25,6 +25,19 @@ model Tarefa{
   status Status @default(PENDENTE)
 }
 
+model Usuario {
+  id String @id @default(uuid())
+  nome String
+  email String @unique
+  senha String
+  role Role @default(USUARIO)
+}
+
+enum Role {
+  USUARIO
+  ADMIN
+}
+
 enum Status {
   PENDENTE
   EM_ANDAMENTO
