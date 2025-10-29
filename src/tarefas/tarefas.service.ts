@@ -9,7 +9,7 @@ export class TarefasService {
   constructor( private prismaService: PrismaService) {}
 
   async create(data: CreateTarefaDto): Promise<Tarefa> {
-    return this.prismaService.tarefa.create({data})
+    return this.prismaService.tarefa.create({data});
   };
 
   async findAll(): Promise<Tarefa[]> {
