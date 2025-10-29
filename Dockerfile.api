@@ -1,5 +1,5 @@
 # Etapa 01 - Definir a imagem base do NodeJs
-FROM node:latest
+FROM node:20-alpine
 
 # Etapa 02 - Definir o diretório de trabalho do container
 WORKDIR /api

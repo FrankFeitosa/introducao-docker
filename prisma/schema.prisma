@@ -13,24 +13,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tarefa{
-  id String @id @default(uuid())
-  nome_tarefa String
-  responsavel String
-  data_inicio DateTime @default(now())
+model Tarefa {
+  id           String   @id @default(uuid())
+  nome_tarefa  String
+  responsavel  String
+  data_inicio  DateTime @default(now())
   data_entrega DateTime
-  objetivo String
-  criado DateTime @default(now())
-  atualizado DateTime @updatedAt
-  status Status @default(PENDENTE)
+  objetivo     String
+  criado       DateTime @default(now())
+  atualizado   DateTime @updatedAt
+  status       Status   @default(PENDENTE)
+  usuarioId    String?
+  usuario      Usuario?  @relation(references: [id], fields: [usuarioId], onDelete: Cascade)
 }
 
 model Usuario {
-  id String @id @default(uuid())
-  nome String
-  email String @unique
-  senha String
-  role Role @default(USUARIO)
+  id     String   @id @default(uuid())
+  nome   String
+  email  String   @unique
+  senha  String
+  role   Role     @default(USUARIO)
+  tarefa Tarefa[]
 }
 
 enum Role {
